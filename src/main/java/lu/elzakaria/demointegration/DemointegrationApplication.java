@@ -1,17 +1,12 @@
 package lu.elzakaria.demointegration;
 
-import ch.qos.logback.core.util.StatusPrinter;
 import lombok.extern.slf4j.Slf4j;
 import lu.elzakaria.entities.Person;
 import lu.elzakaria.entities.PersonRepo;
-import org.h2.store.FileLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -69,16 +64,14 @@ public class DemointegrationApplication {
      */
     @Bean
     ApplicationRunner populateDatabase() {
-        return args ->
-        {
-            Stream.iterate(0, integer -> integer++)
-                    .limit(100)
-                    .forEach(integer -> {
-                        Person person = new Person();
-                        person.setUsername("user " + integer);
-                        personRepository.save(person);
-                    });
-          };
+        Stream.iterate(0, integer -> integer++)
+                .limit(100)
+                .forEach(integer -> {
+                    Person person = new Person();
+                    person.setUsername("user " + integer);
+                    personRepository.save(person);
+                });
+        return args -> {};
     }
 
     @Bean
